@@ -10,5 +10,12 @@
   },
   "icons": {
     "48": "icon.png"
-  }
+  },
+  "background": {
+    "scripts": ["jquery.min.js", "script.js"],
+    "persistent": false
+  },
+  "permissions": [
+    "alarms"
+  ]
 }
