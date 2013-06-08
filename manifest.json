@@ -16,6 +16,7 @@
     "persistent": false
   },
   "permissions": [
-    "alarms"
+    "alarms",
+    "http://transit.loco.yahoo.co.jp/"
   ]
 }
