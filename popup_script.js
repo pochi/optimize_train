@@ -2,6 +2,7 @@ $(function() {
   $("p").html('Now loading...');
 
   var date = new Date();
+  date.setMinutes(date.getMinutes() + 5);
   var month = date.getMonth() + 1;
   if(month<10) month = "0"+ month;
   var yearAndMonth = String(date.getFullYear()) + month;
