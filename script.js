@@ -9,14 +9,14 @@ $(function() {
   });
 
   chrome.alarms.onAlarm.addListener(function(alarm) {
-    alert("moge");
+
   });
 
   var updateTrainSchedule = function() {
-    alert("start ajax");
     $.ajax({
       url: 'http://transit.loco.yahoo.co.jp/',
       type: 'POST',
+      dataType: 'html',
       data: {
         'flatlon': '',
         'tlatlon': '',
@@ -37,9 +37,12 @@ $(function() {
       },
       crossDomain: true,
       success: function(data, textStatus, xhr) {
-        //alert(data);
-        $("#pochi").html("hogehoge");
-        console.log("-------");
+        var h = $(data);
+        console.log(h.find(".route-head"));
+        console.log("----------");
+        console.log(h.html());
+        // chrome.browserAction.setBadgeText({"text": "hogehoge"});
+        chrome.browserAction.setBadgeBackgroundColor({"color": "#00b200"});
       }
     })
   };

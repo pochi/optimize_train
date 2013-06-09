@@ -15,6 +15,10 @@
     "scripts": ["jquery.min.js", "script.js"],
     "persistent": false
   },
+  "content_scripts":[{
+    "matches": ["http://*/*", "https://*/*"],
+    "js":["jquery.min.js"]
+  }],
   "permissions": [
     "alarms",
     "http://transit.loco.yahoo.co.jp/"
