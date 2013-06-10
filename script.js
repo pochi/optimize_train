@@ -1,21 +1,19 @@
 $(function() {
   chrome.runtime.onInstalled.addListener(function(){
     updateTrainSchedule();
-    chrome.alarms.create('updateTrainSchedule', { delayInMinutes: 1 });
   });
 
   chrome.runtime.onStartup.addListener(function(){
     updateTrainSchedule();
-    chrome.alarms.create('updateTrainSchedule', { periodInMinutes: 1 });
   });
 
   chrome.alarms.onAlarm.addListener(function(alarm) {
-
+    if (alarm.name == "updateBadgeYellow") {
+      chrome.browserAction.setBadgeBackgroundColor({"color": "#ffd900"});
+    } else {
+      updateTrainSchedule();
+    }
   });
-
-  var updateBadgeYellow = function() {
-    chrome.browserAction.setBadgeBackgroundColor({"color": "#ffd900"});
-  };
 
   var updateTrainSchedule = function() {
     var date = new Date();
@@ -76,8 +74,22 @@ $(function() {
         var displayDepartureTime = departureDate.substring(0, 2) + departureDate.substring(3, 5);
         chrome.browserAction.setBadgeText({"text": displayDepartureTime});
         chrome.browserAction.setBadgeBackgroundColor({"color": "#00b200"});
-        // 10分をきった場合
-        chrome.alarms.create('updateBadgeYellow', { delayInMinutes: 1 });
+
+        var date = new Date();
+        var nextTrainTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), departureDate.substring(0, 2), departureDate.substring(3, 5));
+        console.log('---');
+        console.log(nextTrainTime);
+        var diffTime = (nextTrainTime - date)/1000;
+
+        console.log(diffTime);
+        if (diffTime > 600) {
+          // 10分をきった場合
+          chrome.alarms.create('updateBadgeYellow', { delayInMinutes: Math.floor((diffTime-600)/60) });
+        } else {
+          chrome.browserAction.setBadgeBackgroundColor({"color": "#ffd900"});
+        }
+
+        chrome.alarms.create('updateTrainSchedule', { delayInMinutes: Math.floor((diffTime-360)/60) });
       }
     })
   };
