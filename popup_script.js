@@ -27,10 +27,10 @@ $(function() {
     type: 'POST',
     data: {
       'flatlon': '',
-      'from': '日本橋',
+      'from': '勝どき',
       'tlatlon': '',
       'to': '千葉ニュータウン中央',
-      'via': '',
+      'via': '大門',
       'hb': '1',
       'expkind': '1',
       'ym': yearAndMonth,
